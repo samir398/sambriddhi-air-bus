@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sambriddhi Air Bus | Premium Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050505; color: white; margin: 0; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .neon-accent { color: #39FF14; text-shadow: 0 0 10px rgba(57, 255, 20, 0.5); }
+        .neon-bg { background-color: #39FF14; color: black; box-shadow: 0 0 20px rgba(57, 255, 20, 0.4); }
+        .seat { transition: all 0.2s; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); }
+        .seat:hover { border-color: #39FF14; background: rgba(57,255,20,0.1); }
+        .seat.selected { background-color: #39FF14 !important; color: black !important; border-color: #39FF14; transform: scale(1.05); }
+        .hidden { display: none; }
+        .step-indicator { width: 10px; height: 10px; border-radius: 50%; background: #222; transition: 0.3s; }
+        .step-indicator.active { background: #39FF14; width: 30px; border-radius: 10px; box-shadow: 0 0 10px #39FF14; }
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; }
+    </style>
+</head>
+<body>
+
+    <div style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; overflow:hidden;">
+        <div style="position:absolute; top:-10%; left:-10%; width:60%; height:60%; background:rgba(57,255,20,0.04); filter:blur(120px); border-radius:50%;"></div>
+    </div>
+
+    <nav class="p-5 glass flex justify-between items-center sticky top-0 z-50 border-b border-white/5">
+        <div>
+            <h1 class="text-xl font-extrabold italic uppercase leading-none tracking-tighter">Sambriddhi <span class="neon-accent">Air Bus</span></h1>
+            <p class="text-[8px] uppercase tracking-widest text-gray-500 mt-1 font-bold">Luxury Night Service</p>
+        </div>
+        <div class="flex gap-3">
+            <a href="https://wa.me/9779763255296" class="p-2 glass rounded-lg border-white/10 hover:border-[#39FF14] transition"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" class="w-4 h-4 invert"></a>
+            <a href="tel:9763255296" class="neon-bg px-4 py-2 rounded-xl font-extrabold text-sm uppercase">Call Now</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-6 pb-20">
+        
+        <div class="flex justify-center gap-2 mt-4 mb-12">
+            <div id="dot1" class="step-indicator active"></div>
+            <div id="dot2" class="step-indicator"></div>
+            <div id="dot3" class="step-indicator"></div>
+        </div>
+
+        <div id="slide1">
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-black mb-4 leading-tight">Travel in <br><span class="neon-accent italic">Elite Comfort</span></h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8 max-w-2xl mx-auto">
+                    <div class="glass p-4 rounded-2xl text-[10px] uppercase font-bold text-gray-400">🛋️ Luxury 2x1</div>
+                    <div class="glass p-4 rounded-2xl text-[10px] uppercase font-bold text-gray-400">☁️ Suspension</div>
+                    <div class="glass p-4 rounded-2xl text-[10px] uppercase font-bold text-gray-400">📶 Free Wi-Fi</div>
+                    <div class="glass p-4 rounded-2xl text-[10px] uppercase font-bold text-gray-400">❄️ AC/Sleeper</div>
+                </div>
+            </div>
+
+            <div class="glass p-8 md:p-12 rounded-[3rem] max-w-xl mx-auto border-t border-white/10 shadow-2xl">
+                <div class="space-y-6">
+                    <div>
+                        <label class="text-[10px] uppercase font-black text-gray-500 ml-2 block mb-2">Select Route</label>
+                        <select id="routeSelect" class="w-full bg-black/40 border border-white/10 p-5 rounded-2xl outline-none focus:border-[#39FF14] text-white cursor-pointer appearance-none transition">
+                            <option value="">Where are you going?</option>
+                            <option value="Pokhara to Dharan">Pokhara → Dharan</option>
+                            <option value="Dharan to Pokhara">Dharan → Pokhara</option>
+                            <option value="Itahari to Pokhara">Itahari → Pokhara</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] uppercase font-black text-gray-500 ml-2 block mb-2">Journey Date</label>
+                        <input type="date" id="dateInput" class="w-full bg-black/40 border border-white/10 p-5 rounded-2xl outline-none focus:border-[#39FF14] text-white transition">
+                    </div>
+                    <div class="flex justify-between items-center p-5 bg-[#39FF14]/5 rounded-2xl border border-[#39FF14]/20">
+                        <span class="text-xs font-bold text-gray-400 uppercase italic">Ticket Fare</span>
+                        <span class="text-2xl font-black neon-accent tracking-tighter">NPR 2500</span>
+                    </div>
+                    <button onclick="goToSlide2()" class="w-full py-5 neon-bg rounded-2xl font-black text-xl uppercase tracking-widest transform active:scale-95 transition">Find Seats</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="slide2" class="hidden">
+            <div class="flex flex-col md:flex-row gap-10 items-start">
+                <div class="flex-1 w-full glass p-10 rounded-[3.5rem] border-t-2 border-[#39FF14]/20 shadow-2xl">
+                    <h3 class="text-2xl font-black mb-10 italic">Bus <span class="neon-accent">Cabin</span></h3>
+                    
+                    <div class="max-w-[240px] mx-auto bg-white/5 rounded-[4rem] p-8 border-x border-white/5">
+                        <div class="flex justify-end mb-12 opacity-20"><div class="w-10 h-10 border-4 border-white rounded-full"></div></div>
+                        
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="col-span-1 space-y-4" id="singleRow"></div>
+                            <div class="col-span-1"></div>
+                            <div class="col-span-2 grid grid-cols-2 gap-4" id="doubleRow"></div>
+                        </div>
+
+                        <div class="mt-12 pt-8 border-t border-white/10">
+                            <p class="text-[9px] text-center text-gray-500 uppercase tracking-widest mb-6 font-bold">Luxury Sleeper Sofa</p>
+                            <div class="flex gap-4">
+                                <div onclick="toggleSeat(this, 'Sleeper-1')" class="seat w-full h-16 rounded-2xl flex items-center justify-center text-[10px] font-black uppercase">S-1</div>
+                                <div onclick="toggleSeat(this, 'Sleeper-2')" class="seat w-full h-16 rounded-2xl flex items-center justify-center text-[10px] font-black uppercase">S-2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-80 space-y-4 h-fit sticky top-28">
+                    <div class="glass p-8 rounded-[2.5rem] border border-white/5">
+                        <p class="text-[10px] font-black text-gray-500 mb-6 uppercase tracking-widest">Booking Info</p>
+                        <div class="text-sm space-y-4">
+                            <div class="flex justify-between items-center"><span class="text-gray-400">Selected:</span> <span id="displaySeats" class="neon-accent font-black text-right">None</span></div>
+                            <div class="flex justify-between items-center pt-4 border-t border-white/5 font-black text-xl"><span>Total:</span> <span id="displayTotal" class="neon-accent">NPR 0</span></div>
+                        </div>
+                    </div>
+                    <button onclick="goToSlide3()" class="w-full py-5 neon-bg rounded-2xl font-black uppercase tracking-widest shadow-lg active:scale-95 transition">Checkout</button>
+                    <button onclick="backToSlide1()" class="w-full text-[10px] text-gray-500 underline font-bold uppercase text-center">Change Route</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="slide3" class="hidden">
+            <div class="max-w-xl mx-auto glass p-10 md:p-14 rounded-[4rem] text-center shadow-2xl border-b-8 border-[#39FF14]/20">
+                <h3 class="text-3xl font-black mb-8 italic uppercase tracking-tighter">Secure <span class="neon-accent">Payment</span></h3>
+                
+                <div class="bg-white p-5 rounded-[2.5rem] inline-block mb-10 shadow-2xl transform hover:scale-105 transition">
+                    <p class="text-[9px] text-black font-black uppercase mb-3 tracking-widest italic">Scan to Pay (eSewa / Khalti)</p>
+                    <img src="https://i.postimg.cc/T3m8r9qV/dummy-qr.png" id="businessQR" alt="Payment QR" class="w-52 h-52 mx-auto rounded-xl">
+                    <p class="text-[10px] text-gray-400 mt-3 font-bold">Account: Sambriddhi Air Bus</p>
+                </div>
+
+                <div class="space-y-6 text-left">
+                    <div>
+                        <label class="text-[10px] uppercase font-black text-gray-500 ml-2 block mb-2 tracking-widest">Passenger Name</label>
+                        <input type="text" id="passName" placeholder="Enter Full Name" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-[#39FF14] text-lg transition">
+                    </div>
+                    <div>
+                        <label class="text-[10px] uppercase font-black text-gray-500 ml-2 block mb-2 tracking-widest">Phone Number</label>
+                        <input type="tel" id="passPhone" placeholder="98XXXXXXXX" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-[#39FF14] text-lg transition">
+                    </div>
+
+                    <div class="p-6 bg-[#39FF14]/5 rounded-3xl border border-[#39FF14]/20 flex justify-between items-center mt-4">
+                        <span class="text-sm font-bold opacity-60 italic">Amount Due</span>
+                        <span class="text-3xl font-black neon-accent tracking-tighter" id="finalPriceDisplay">NPR 0</span>
+                    </div>
+
+                    <button onclick="showFinalSuccess()" class="w-full py-6 neon-bg rounded-2xl font-black text-xl mt-8 shadow-2xl transform active:scale-95 transition uppercase tracking-tighter">Confirm Ticket</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="successPage" class="hidden text-center py-20">
+            <div class="w-24 h-24 neon-bg rounded-full flex items-center justify-center mx-auto mb-10 text-4xl animate-bounce">✓</div>
+            <h2 class="text-5xl font-black mb-4 italic uppercase">Success!</h2>
+            <p class="text-gray-400 text-lg mb-12">Ticket reserved. Our team will call you <br>at the provided number for verification.</p>
+            <div class="p-10 glass border-dashed border-2 border-white/20 inline-block rounded-[3rem] shadow-2xl">
+                <span class="text-xs uppercase text-gray-500 block mb-4 tracking-[0.5em] font-black">Trip ID</span>
+                <span class="text-4xl font-mono font-black tracking-[0.5em] neon-accent">SAM-2026</span>
+            </div>
+            <br>
+            <button onclick="location.reload()" class="mt-16 text-xs font-black uppercase underline text-gray-500 hover:text-white transition tracking-widest">Book Another Trip</button>
+        </div>
+
+    </main>
+
+    <script>
+        let selectedSeats = [];
+        const fare = 2500;
+
+        // Auto-generate seat grid
+        window.onload = function() {
+            const singleRow = document.getElementById('singleRow');
+            const doubleRow = document.getElementById('doubleRow');
+            
+            for(let i=1; i<=9; i++) {
+                singleRow.innerHTML += `<div onclick="toggleSeat(this, 'S${i}')" class="seat w-12 h-12 rounded-xl flex items-center justify-center text-[10px] font-black uppercase">S${i}</div>`;
+                doubleRow.innerHTML += `<div onclick="toggleSeat(this, 'D${i}A')" class="seat w-12 h-12 rounded-xl flex items-center justify-center text-[10px] font-black uppercase">D${i}A</div>`;
+                doubleRow.innerHTML += `<div onclick="toggleSeat(this, 'D${i}B')" class="seat w-12 h-12 rounded-xl flex items-center justify-center text-[10px] font-black uppercase">D${i}B</div>`;
+            }
+        }
+
+        function toggleSeat(el, id) {
+            if(el.classList.contains('selected')) {
+                el.classList.remove('selected');
+                selectedSeats = selectedSeats.filter(s => s !== id);
+            } else {
+                el.classList.add('selected');
+                selectedSeats.push(id);
+            }
+            updateSummary();
+        }
+
+        function updateSummary() {
+            document.getElementById('displaySeats').innerText = selectedSeats.length > 0 ? selectedSeats.join(', ') : 'None';
+            document.getElementById('displayTotal').innerText = 'NPR ' + (selectedSeats.length * fare);
+        }
+
+        function goToSlide2() {
+            const r = document.getElementById('routeSelect').value;
+            const d = document.getElementById('dateInput').value;
+            if(!r || !d) { alert("Please choose your route and date first!"); return; }
+            document.getElementById('slide1').classList.add('hidden');
+            document.getElementById('slide2').classList.remove('hidden');
+            document.getElementById('dot2').classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function backToSlide1() {
+            document.getElementById('slide2').classList.add('hidden');
+            document.getElementById('slide1').classList.remove('hidden');
+            document.getElementById('dot2').classList.remove('active');
+        }
+
+        function goToSlide3() {
+            if(selectedSeats.length === 0) { alert("Select at least one seat to continue."); return; }
+            document.getElementById('slide2').classList.add('hidden');
+            document.getElementById('slide3').classList.remove('hidden');
+            document.getElementById('dot3').classList.add('active');
+            document.getElementById('finalPriceDisplay').innerText = 'NPR ' + (selectedSeats.length * fare);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function showFinalSuccess() {
+            const n = document.getElementById('passName').value;
+            const p = document.getElementById('passPhone').value;
+            if(!n || !p) { alert("Passenger details are required for ticket generation."); return; }
+            document.getElementById('slide3').classList.add('hidden');
+            document.getElementById('successPage').classList.remove('hidden');
+            document.getElementById('dot1').classList.remove('active');
+            document.getElementById('dot2').classList.remove('active');
+            document.getElementById('dot3').classList.remove('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    </script>
+</body>
+</html>
